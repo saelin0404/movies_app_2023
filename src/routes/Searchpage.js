@@ -11,15 +11,12 @@ function Searchpage() {
   const useQuery =() =>{
     return new URLSearchParams(useLocation().search) //URLSearchParams을 이용해서 .search값을 가져오게됨
   }
-  console.log(useLocation());//브라우저의 기본정보가 객체로 들어와있음
 
   let query = useQuery();
   //?q=검색어
   
   const searchTerm = query.get("q");
   const debounceSearchTerm = useDebounce(searchTerm,500)//검색한글자랑 시간 넣어줌//이 값을 넣어서 호출
-  console.log(searchTerm);
-  //q값만 가져오게 된다
 
   useEffect(()=>{
     if(debounceSearchTerm){//searchTerm -> debounceSearchTerm (성능 향상전 검색어를 입력할때마다 렌더링)
@@ -30,14 +27,13 @@ function Searchpage() {
   const fetchSearchMovie = async(searchTerm) =>{
     try{
       const requests = await axios.get(`/search/movie?include_adult=false&query=${debounceSearchTerm}`);//query는 질문  //searchTerm
-      console.log(requests); //영화정보
       setSearchResults(requests.data.results)
       
     }catch(error){
       console.log(error.message);
     }
   }
-
+  
   const renderSearchResults=()=>{
     return searchResults.length > 0 ? (
       //검색결과가 0보다 크다(검색결과가 있다)
@@ -46,10 +42,13 @@ function Searchpage() {
           if(movie.backdrop_path !== null && movie.media_type !== "person"){//포스터가 없으면 div가 표시 되지않음(에러메세지가 나오지않게)
             const movieImageUrl = 'https://image.tmdb.org/t/p/w500' + movie.backdrop_path;
             return(
-              <div className='movie'>
+              <div className='movie' style={{color:'#fff'}}>
                 <div className='movie__column-poster' onClick={()=> navigate(`/${movie.id}`)}>{/*영화아이디값 보내줌*/}
                   <img src={movieImageUrl} alt={movie.title} className='movie__poster'/>
                 </div>
+                <p>{movie.title || movie.name || movie.original_name}</p>
+                <span>플러스버튼</span>
+                <span>하트</span>
               </div>
             )
           }

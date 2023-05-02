@@ -2,26 +2,27 @@ import axios from '../api/aixos';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
-function Detailpage() {
+function Likes({first}) {
   const [movie,setMovie] = useState({});//
   let {movieId} = useParams();//파람값을 가져올수 있음 //{}객체로 되어있기 때문에 구조분해할당으로 받음(속성값만 나옴) 
 
 
   useEffect(()=>{
     fetchData();
-  },[movieId])
+  },[])
 
   const fetchData = async(fetch) =>{
     try{
-      const requests = await axios.get(`/movie/${movieId}`,{params:{append_to_response : 'videos'}}); //아이디나 비밀번호같은 정보는 get(주소창으로 전달)이 아닌 post로 전달하여 body에 숨겨서 전달하게 됨
-      console.log("영화정보들 디테일",requests);
-      setMovie(requests.data)
-
+      if(first){
+        const requests = await axios.get(`/movie/${first}`)
+        console.log("영화정보들 디테일",requests);
+        setMovie(requests.data)
+      }
     }catch(error){
       console.log(error.message);
     }
   }
-  
+
   if(!movie) return <div>...loading</div>
   return (
     <section style={{color:"#fff"}}>
@@ -56,4 +57,4 @@ function Detailpage() {
   )
 }
 
-export default Detailpage
+export default Likes

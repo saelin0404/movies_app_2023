@@ -28,7 +28,13 @@ function Banner() {
 
   const truncate = (str,n) =>{
     return str?.length>n ? str.substr(0,n-1) + "..." : str;
+    //str?은 str이 없으면 바로 error가 뜨지만 옵션널연산자를 붙여서 있든 없던 나오게
+    //글자가 n보다 크면
+    // str.substr(0,n-1) + "..."를 0부터 n-1까지 를 ...을붙여준다
   }
+  //"https://image.themoviedb.org/t/p/original/ 이미지주소 공식 홈페이지에 나와있음
+  // {movie.title || movie.name || movie.original_name} 값을 찾을수 없을때 뒤에있는 값을 실행한다 (널병합연산자)
+  // movie.videos.results[0]?.key 물음표로 옵션널 연산자를 넣어줌 언디파인이라는 값을 넣어주게 됨
 
 
   if(!isClicked){
@@ -65,9 +71,10 @@ function Banner() {
         </HomeContainer>
       </Container>
     )
-  }
+  }//if문
 }
 
+//만든 컨테이너를 div처럼 사용하겠다
 const Container = styled.div`
   display:flex;
   flex-direction:column;

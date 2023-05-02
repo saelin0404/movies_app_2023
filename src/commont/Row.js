@@ -8,12 +8,33 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import { collection, addDoc , onSnapshot ,query, orderBy ,where} from "firebase/firestore";
+import { doc, deleteDoc ,updateDoc} from "firebase/firestore";
+import { ref, deleteObject } from "firebase/storage";
+import { db , storage } from 'fbase';
 
 
-function Row({isLargeRow,title,id,fetchUrl}) {
+function Row({isLargeRow,title,id,fetchUrl,userObj}) {
+  console.log(userObj);
   const [movies,setMovies] = useState([]);
+  const [video,setVideo] = useState([]);
   const [modalOpne,setModalOpne] = useState(false);
   const [movieSelected,setMovieSelected] = useState({});
+  const [likeMovie,setLikeMovie]= useState("")
+  const [like,setLike]=useState([]);
+
+  useEffect(()=>{
+    // getTeets();
+    const q = query(collection(db, "likes"),where("creatorID","==",userObj.uid),
+     orderBy('createdAt','desc'));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const newArray = [];
+      querySnapshot.forEach((doc) => {
+          newArray.push({...doc.data(),id:doc.id})
+      });
+      setLike(newArray);
+    });
+  },[])
 
   useEffect(()=>{
     fetchMovieData();
@@ -21,15 +42,25 @@ function Row({isLargeRow,title,id,fetchUrl}) {
 
   const fetchMovieData = async ()=>{
     const request =  await axios.get(fetchUrl);
-    console.log(request);
     setMovies(request.data.results);
   }
 
   // 이미지를 눌렀을 때
-  const handleClick = (movie)=>{
+  const handleClick = async(movie)=>{
     setModalOpne(true)
     setMovieSelected(movie)
+    const {data:movieDetail} = await axios.get(`/movie/${movie.id}`,{params:{append_to_response : 'videos'}});
+    setVideo(movieDetail)
   }
+
+  const handleMouseOver = async (movie) => {
+    const {data:movieDetail} = await axios.get(`/movie/${movie.id}`,{params:{append_to_response : 'videos'}});
+    setVideo(movieDetail)
+  };
+
+  const handleMouseLeave = async () => {
+    setVideo("")
+  };
 
   return (
     <section className='row'>
@@ -68,16 +99,30 @@ function Row({isLargeRow,title,id,fetchUrl}) {
 
       <div id={id} className='row__posters' key={id}>
         {movies.map((movie)=>(
-          <SwiperSlide>
-            <img
+          <>
+            <SwiperSlide>
+            {movie.id === video.id ? (
+                <iframe src={`https://www.youtube.com/embed/${video.videos.results[0]?.key}
+                ?controls=0&autoplay=1&loop=1&mute=1&playlist=${video.videos.results[0]?.key}`} title='Youtube video player'
+                className={`row__poster ${isLargeRow && "row__posterLarge"}`}
+                onMouseLeave={handleMouseLeave}
+                ></iframe>
+            ):(
+              <img
               key={movie.id}
-              onClick={()=>handleClick(movie)}
+              onMouseOver={()=>handleMouseOver(movie)}
               className={`row__poster ${isLargeRow && "row__posterLarge"}`}
               src={`https://image.tmdb.org/t/p/original/${isLargeRow ? movie.poster_path:movie.backdrop_path}`}
               loading='lazy'
               alt={movie.title || movie.name || movie.original_name}
             />
+            )}
+            {!isLargeRow && <p>{movie.title || movie.name || movie.original_name}</p>}
+            <span onClick={()=>handleClick(movie)}>플러스버튼</span>
           </SwiperSlide>
+          
+          </>
+          
         ))}
       </div>
 
@@ -90,7 +135,7 @@ function Row({isLargeRow,title,id,fetchUrl}) {
       
       </Swiper>
       {modalOpne && (
-        <MovieModal {...movieSelected} setModalOpne={setModalOpne}/>//파람스={스테잇값}
+        <MovieModal {...movieSelected} userObj={userObj} like={like} setModalOpne={setModalOpne} video={video}/>//파람스={스테잇값}
       )}
     </section>
   )
