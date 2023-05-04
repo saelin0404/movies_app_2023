@@ -1,0 +1,41 @@
+/* mypage */
+.mypage{position: relative; top: 70px; height: fit-content; min-height: 100vh; 
+  width: 100%; padding: 15px; color: #fff;}
+.mypage__myProfile{width: 100%; display: flex; flex-direction: row; flex-wrap: wrap;}
+.mypage__myProfile h2{width: 100%; font-size: 40px; padding-bottom: 30px;}
+.mypage__myProfile .myProfile_image{position: relative; width: 150px; padding: 20px;}
+.myProfile_image .myprofile_img{display: block; width:150px; height: 150px;
+  background-size: cover;}
+.myprofile_edit{display: inline-block; width: 35px; height: 35px;
+  text-align: center; line-height: 35px;
+  background: rgba(130, 130, 130, 0.5); border-radius: 50%;}
+.myProfile_image .myprofile_edit{position: absolute; right: 5px; top: 0;}
+.myprofile_select{display: flex; margin-top: 20px; margin-left: 10px;}
+.myprofile_select>form{display: flex; flex-direction: row; justify-content: center; align-items: center;}
+.myprofile_select>form>label{display: flex; flex-direction: column; justify-content: center;
+  align-items: center; width: 80px; height: 80px; background: rgba(55, 55, 55, 0.5); margin-right: 10px;
+  box-shadow: 3px 3px 5px rgba(255, 255, 255, 0.5)}
+.myprofile_select .select_submit{box-shadow: none; border-radius: 50%;}
+.myprofile_select>ul{display: flex; list-style: none; padding: 0;}
+.myprofile_select>ul>li{width: 80px; height: 80px; margin-right: 10px; background-size: cover; box-shadow: 3px 3px 5px rgba(255, 255, 255, 0.5)}
+.myprofile_names{position: absolute; left: 200px; top: 130px; padding: 20px; box-sizing: border-box; display: flex; align-items: center;}
+.myprofile_names .myprofile_name{font-size: 30px; padding-top: 20px;}
+.myprofile_names .namechange{padding-top: 20px;}
+.myprofile_names .namechange>input{padding-left: 15px; height: 40px; width: 200px; background: rgba(38, 38, 38, 0.5); 
+  box-shadow: 3px 3px 5px rgba(255, 255, 255, 0.5); color: #fff;}
+.myprofile_names .namechange>input::placeholder{font-size: 20px; color: rgba(255, 255, 255, 0.8);}
+.myprofile_names .namechange>label{padding-left: 15px; font-size: 30px; line-height: 30px;}
+.logOut{position:absolute; left: 250px; top: 20px; font-size: 30px; color: rgba(255, 255, 255, 0.8);}
+.logOut>*{transition: all 0.3s linear;}
+.logOut>span{font-size: 20px; opacity: 0;}
+.logOut:hover>svg{transform: scale(1.2); color: #fff;}
+.logOut:hover>span{opacity: 1;}
+.mypage__likes{margin-top: 20px;}
+.mypage__likes>h2{font-size: 40px; padding-bottom: 20px;}
+.mypage__likes>ul{width: 100%; padding: 0 30px; display: flex; flex-direction: row; justify-content: flex-start;
+  flex-wrap: wrap; list-style: none;}
+.mypage__likes>ul>li{position: relative; padding-right: 25px; padding-bottom: 30px;}
+.mypage__likes>ul>li>h3{text-align: center; line-height: 45px;}
+.mypage__likes>ul>li>span{position: absolute; right: 35px; bottom: 90px;}
+.mypage__likes>ul>li>span>svg{font-size: 30px;}
+.modal__mylike{color: #f00;}
