@@ -27,10 +27,10 @@ function Likes({first,id}) {
   }
 
   const onDeletclick = async(e) =>{
-    const ok = window.confirm("좋아요 취소 하시겠습니까?")
+    const ok = window.confirm("'좋아요'목록에서 지우시겠습니까?")
     if(ok){
       const data = await deleteDoc(doc(db, "likes", `/${id}`));
-      window.location.reload();
+      window.location.href = "https://saelin0404.github.io/movie_app_2023/"
     }
   }
 
