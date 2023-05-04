@@ -23,16 +23,16 @@ const Layout = ({userObj}) => {
 
 function App() {
   const [init,setInit] = useState(false);
-  const[isLoggedIn,setisLOggedIn] = useState(false);
+  const[isLoggedIn,setIsLOggedIn] = useState(false);
   const [userObj,setUserObj] = useState(null);
 
   useEffect(()=>{
     onAuthStateChanged(authService, (user) => { 
       if(user){
-        setisLOggedIn(user);
+        setIsLOggedIn(user);
         setUserObj(user);
       } else {
-        setisLOggedIn(false);
+        setIsLOggedIn(false);
       }
       setInit(true)
     });
