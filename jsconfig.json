@@ -2,5 +2,5 @@
   "compilerOptions": {
     "baseUrl": "src"
   },
-  "include": ["src", "../../kakao_app/src/component/Back.js"]
+  "include": ["src"]
 }

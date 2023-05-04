@@ -6,7 +6,7 @@ import { updateProfile } from 'firebase/auth'
 import { v4 as uuidv4 } from 'uuid';
 import { ref, uploadString ,getDownloadURL } from "firebase/storage";
 import { collection, onSnapshot ,query, orderBy ,where} from "firebase/firestore";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faCheck, faHeart, faPencil, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import img from 'img/asset2.png'
@@ -97,6 +97,7 @@ function Myprofile({userObj}) {
     await updateProfile(userObj,{photoURL:Url})
     setEditImg(false)
   }
+
 
   return (
     <div className='mypage'>

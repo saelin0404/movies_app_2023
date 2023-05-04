@@ -30,7 +30,7 @@ function Likes({first,id}) {
     const ok = window.confirm("'좋아요'목록에서 지우시겠습니까?")
     if(ok){
       const data = await deleteDoc(doc(db, "likes", `/${id}`));
-      window.location.href = "https://saelin0404.github.io/movie_app_2023/"
+      window.location.href = "https://saelin0404.github.io/movies_app_2023/myprofile"
     }
   }
 
